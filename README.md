@@ -137,5 +137,60 @@ Each plot shows: Original | Sobel | Laplacian | Canny | Prewitt
 
 ---
 
-## AI Usage
-See [AI_Log.md](AI_Log.md) for full AI usage tracking.
+# Homework 2: Image Segmentation
+
+## Part 2: Multi-Channel Normalization
+All 3 color channels (B, G, R) were independently histogram-equalized
+and merged back together. Compared to Homework 1's single-channel (V only)
+normalization, this multi-channel approach more aggressively balanced
+contrast across all color information.
+
+## Part 3 & 4: Segmentation Results
+
+| Method | IoU | Dice Coefficient |
+|---|---|---|
+| Otsu Thresholding | 0.0449 | 0.0859 |
+| Adaptive Thresholding | 0.0787 | 0.1459 |
+| K-Means Clustering | 0.1979 | 0.3305 |
+
+## Part 5: Qualitative Analysis
+
+**Otsu Thresholding** performed the worst of the three methods (IoU 0.0449). 
+Otsu calculates a single global threshold for the entire image, which struggles 
+with this scene's uneven outdoor lighting — the dark grass, varying shadow areas, 
+and bright sky all competed for the same brightness range as the figure, causing 
+significant background noise to be classified as foreground while parts of the 
+figure itself were misclassified as background.
+
+**Adaptive Thresholding** improved on Otsu (IoU 0.0787) by calculating local 
+thresholds for small regions rather than one global value, which helped handle 
+some of the uneven lighting. However, it still struggled significantly with 
+grass texture noise, since the local brightness variation in grass blades was 
+similar in scale to the brightness variation at the figure's edges.
+
+**K-Means Clustering** clearly outperformed both threshold-based methods 
+(IoU 0.1979, more than double Adaptive's score). By clustering in HSV color 
+space rather than relying on simple brightness thresholds, K-Means could 
+separate the figure's clothing/skin tones from the grass and sky based on 
+hue and saturation differences, not just brightness. Applying Gaussian blur 
+before clustering and morphological cleanup (opening/closing) afterward 
+further reduced grass texture noise that initially fragmented the mask.
+
+**Impact of multi-channel normalization:** Compared to Homework 1's edge 
+detection results (which used only single-channel V normalization), the 
+full 3-channel normalization in this assignment produced more balanced 
+contrast across the color image, which directly benefited K-Means clustering 
+since it depends on color information across all channels. The threshold-based 
+methods (Otsu, Adaptive) benefited less from this normalization since they 
+only use the grayscale-converted version of the image, discarding the color 
+information that multi-channel normalization improved.
+
+**Best performing method:** K-Means clustering was the best performer by a 
+clear margin in both IoU and Dice metrics. This matches what we observed 
+visually — the K-Means mask preserved a recognizable full-body silhouette 
+of the figure, while Otsu and Adaptive masks were dominated by background 
+texture noise that overwhelmed the relatively small ground truth figure area.
+
+## Comparison Visualization
+
+![Segmentation Comparison](readme_plots/segmentation_comparison.png)
