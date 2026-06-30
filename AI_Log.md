@@ -1,11 +1,11 @@
-# AI Usage Log — CS 898BA Homework 1
+# AI Usage Log — CS 898BA Homework 1 & Homework 2
 **Author:** Nitin Sai Karuturi  
 **Course:** CS 898BA – Image Analysis and Computer Vision  
-**Assignment:** Homework 1  
+**Assignment:** Homework 1 & Homework 2  
 
 ---
 
-## Log Entries
+## Homework 1 Log Entries
 
 | Date and Time | Prompt | Tool | Response Synopsis | Change |
 |---|---|---|---|---|
@@ -23,3 +23,31 @@
 | 06/18/2026 12:00 PM | There is no code in luminance_equalizer.py | Claude | Provided full code for luminance_equalizer.py explaining HSV channel splitting and histogram equalization on V channel | Pasted code into luminance_equalizer.py and saved |
 | 06/18/2026 12:05 PM | There is no code in any of the files I was asked to create | Claude | Provided full code for spatial_warper.py, blur_pipeline.py, subset_partitioner.py, boundary_extractor.py, and visual_report.py | Pasted code into all 5 remaining scripts and saved |
 | 06/18/2026 12:30 PM | readme_plots folder is empty | Claude | Diagnosed that visual_report.py had not run correctly and guided re-running boundary_extractor.py then visual_report.py | Re-ran both scripts successfully, 6 plots now saved to readme_plots folder |
+
+---
+
+## Homework 2 Log Entries
+
+| Date and Time | Prompt | Tool | Response Synopsis | Change |
+|---|---|---|---|---|
+| 06/29/2026 8:00 PM | Here is my Homework 2 instructions link, analyze it and give me step by step explanation, this is a continuation of Homework 1 | Claude | Read the HW2 GitHub repo (image segmentation assignment), broke it into 6 phases covering branching, multi-channel normalization, threshold segmentation, K-Means clustering, evaluation, and submission | Planned full Homework 2 project structure |
+| 06/29/2026 8:10 PM | Here is my Homework 1 rubric grade and feedback, tell me what I did wrong and don't repeat those mistakes | Claude | Identified two issues: commit history was not incremental, and the edge detection conclusion (Canny is best) was not backed by evidence from actual results | Adopted a strict per-step commit strategy and committed to writing evidence-based analysis using real computed metrics |
+| 06/29/2026 8:20 PM | Please give me each step in detail from scratch for this homework 2 | Claude | Provided full step-by-step guide covering repo setup, branch creation, and complete code for multichannel_normalizer.py, threshold_segmentation.py, kmeans_segmentation.py, segmentation_evaluator.py | Began building the Homework 2 segmentation pipeline |
+| 06/29/2026 8:30 PM | git checkout main giving "fatal: not a git repository" error | Claude | Diagnosed that the working folder was a disconnected copy never properly cloned from GitHub; guided through renaming the broken folder and cloning a fresh copy | Attempted fresh clone, then troubleshot duplicate nested folder paths |
+| 06/29/2026 8:45 PM | What is the easiest fix for this | Claude | Recommended running git init, git remote add origin, git fetch, and git checkout -B main origin/main directly in the existing folder instead of re-cloning | Connected the existing Desktop folder directly to the GitHub repository |
+| 06/29/2026 9:00 PM | git checkout -B main origin/main giving "untracked working tree files would be overwritten" error | Claude | Explained the conflict was due to duplicate file names already existing on GitHub; recommended using --force to safely overwrite with the verified GitHub version | Successfully connected local folder to main branch |
+| 06/29/2026 9:10 PM | Confirmed on Feature-Segmentation branch, ready to proceed | Claude | Verified correct branch setup and provided code for multichannel_normalizer.py (Part 2) | Created and ran multichannel_normalizer.py, committed and pushed |
+| 06/29/2026 9:20 PM | Provided threshold_segmentation.py code and ran successfully | Claude | Verified Otsu and Adaptive thresholding outputs saved correctly | Committed and pushed Part 3 results |
+| 06/29/2026 9:30 PM | I am unable to identify if a K-Means cluster mask image is fine | Claude | Explained that an uploaded edge-detected image was not a K-Means mask, and the original doorbell camera image actually shows a regular walking figure, not a literal alien | Clarified expected output format for K-Means masks |
+| 06/29/2026 9:40 PM | Please select the best K-Means cluster mask from 12 generated images and explain why | Claude | Compared all 12 cluster mask thumbnails and identified the cleanest silhouette based on background noise and figure completeness | Updated CHOSEN_K and CHOSEN_CLUSTER_INDEX in kmeans_segmentation.py |
+| 06/29/2026 9:50 PM | I reran the script and got the same noisy image as before, not the clean one | Claude | Diagnosed that K-Means cluster numbering is non-deterministic between runs due to random initialization; recommended setting a fixed random seed for reproducibility | Added np.random.seed and cv2.setRNGSeed to kmeans_segmentation.py |
+| 06/29/2026 10:00 PM | Can we create the images again so we can have a better output | Claude | Recommended adding Gaussian blur pre-processing and morphological opening/closing cleanup to reduce grass texture noise in K-Means masks | Regenerated all K-Means cluster test masks with significantly reduced noise |
+| 06/29/2026 10:10 PM | Compared 3 new cleaner K-Means cluster masks, asked which to choose | Claude | Identified the cluster with the cleanest full-body silhouette and least background bleed-through | Set CHOSEN_K=4 and CHOSEN_CLUSTER_INDEX=1, generated final kmeans_mask.png |
+| 06/29/2026 10:20 PM | Accidentally typed Python code directly into PowerShell terminal causing CommandNotFoundException | Claude | Explained the distinction between code (goes in the .py file in the editor) and commands (goes in the terminal) | Corrected workflow, edited the file directly instead of the terminal |
+| 06/29/2026 10:30 PM | Created and shared a ground truth mask made in Paint, asked if it looked fine | Claude | Confirmed the ground truth mask was clean and well-traced, suitable for IoU/Dice comparison | Saved ground_truth_mask.png to input folder |
+| 06/29/2026 10:40 PM | image.png thumbnail now shows the black and white silhouette instead of the original photo | Claude | Diagnosed that image.png had been accidentally overwritten by Paint during ground truth mask creation; provided git checkout main -- input/image.png to restore the original from the main branch | Restored original image.png while keeping the new ground_truth_mask.png |
+| 06/29/2026 10:50 PM | python segmentation_evaluator.py giving "No such file or directory" despite file existing in File Explorer | Claude | Diagnosed a terminal working-directory mismatch between File Explorer view and actual terminal path; recommended closing and reopening terminal with explicit cd to the correct full path | User identified and fixed the path issue independently |
+| 06/29/2026 11:00 PM | Shared IoU and Dice results: Otsu 0.0449/0.0859, Adaptive 0.0787/0.1459, K-Means 0.1979/0.3305 | Claude | Interpreted the results, confirmed K-Means was the clear best performer with roughly 4x better IoU than Otsu, and explained the result was evidence-based unlike the HW1 Canny claim | Committed Part 5 evaluation results |
+| 06/29/2026 11:10 PM | Provided comparison_visualizer.py code and ran successfully | Claude | Verified 6-panel comparison plot generated correctly (Original, Normalized, Otsu, Adaptive, K-Means, Ground Truth) | Committed segmentation_comparison.png to readme_plots |
+| 06/29/2026 11:20 PM | Give me full combined README for Homework 1 and Homework 2 in the same format | Claude | Generated a single README.md combining both assignments with matching section structure, updated run instructions, file descriptions, and evidence-based Part 5 analysis using actual computed IoU/Dice scores | Replaced README.md with combined version covering both homeworks |
+| 06/29/2026 11:30 PM | Give me the combined AI Log for both homeworks in a single file | Claude | Generated a single AI_Log.md combining both Homework 1 and Homework 2 entries in the same table format | Replaced AI_Log.md with combined version covering both homeworks |
