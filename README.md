@@ -1,15 +1,17 @@
 # NitinsaiKaruturi-CS898BA-Project1
 **Author:** Nitin Sai Karuturi  
 **Course:** CS 898BA – Image Analysis and Computer Vision  
-**Assignment:** Homework 1
+**Assignment:** Homework 1 & Homework 2
 
 ---
 
 ## Project Overview
 
-This project applies fundamental image analysis and processing techniques 
-to an image captured by a doorbell camera. The goal was to clean up and 
-analyze the image using Python and OpenCV to identify what is in it.
+This project applies fundamental image analysis, processing, and segmentation 
+techniques to an image captured by a doorbell camera. Homework 1 focused on 
+color space transformations, affine transformations, blurring, and edge 
+detection. Homework 2 builds on this pipeline to isolate the figure in the 
+image using classical and optimization-based segmentation techniques.
 
 ---
 
@@ -20,13 +22,13 @@ analyze the image using Python and OpenCV to identify what is in it.
 - OpenCV, NumPy, SciPy, Matplotlib
 
 ### Install Dependencies
-```bash
+\`\`\`bash
 pip install -r requirements.txt
-```
+\`\`\`
 
-### Run the Project
+### Run the Project — Homework 1
 Run scripts in this order from the `src/` directory:
-```bash
+\`\`\`bash
 python Hello_World.py
 python channel_image_statistics.py
 python color_spectrum_conversions.py
@@ -36,11 +38,23 @@ python blur_pipeline.py
 python subset_partitioner.py
 python boundary_extractor.py
 python visual_report.py
-```
+\`\`\`
+
+### Run the Project — Homework 2
+Run scripts in this order from the `src/` directory (after Homework 1 scripts):
+\`\`\`bash
+python multichannel_normalizer.py
+python threshold_segmentation.py
+python kmeans_segmentation.py
+python segmentation_evaluator.py
+python comparison_visualizer.py
+\`\`\`
 
 ---
 
 ## File Descriptions
+
+### Homework 1
 
 | File | Purpose |
 |---|---|
@@ -54,9 +68,19 @@ python visual_report.py
 | `boundary_extractor.py` | Runs Sobel, Laplacian, Canny, Prewitt edge detection on 42 images |
 | `visual_report.py` | Generates 42 comparison plots, saves 6 randomly to readme_plots/ |
 
+### Homework 2
+
+| File | Purpose |
+|---|---|
+| `multichannel_normalizer.py` | Equalizes all 3 BGR channels independently for full-spectrum normalization |
+| `threshold_segmentation.py` | Applies Otsu's global thresholding and Adaptive thresholding segmentation |
+| `kmeans_segmentation.py` | Applies K-Means clustering segmentation in HSV color space |
+| `segmentation_evaluator.py` | Calculates IoU and Dice Coefficient against a manual ground truth mask |
+| `comparison_visualizer.py` | Generates the 6-panel segmentation comparison plot for the README |
+
 ---
 
-## Image Count Summary
+## Image Count Summary (Homework 1)
 
 | Stage | Images |
 |---|---|
@@ -67,6 +91,8 @@ python visual_report.py
 | After edge detection | 210 |
 
 ---
+
+# Homework 1: Image Analysis & Computer Vision
 
 ## Part 2 Results
 
@@ -139,13 +165,31 @@ Each plot shows: Original | Sobel | Laplacian | Canny | Prewitt
 
 # Homework 2: Image Segmentation
 
-## Part 2: Multi-Channel Normalization
+## Part 2 Results
+
+### Multi-Channel Normalization
 All 3 color channels (B, G, R) were independently histogram-equalized
 and merged back together. Compared to Homework 1's single-channel (V only)
 normalization, this multi-channel approach more aggressively balanced
-contrast across all color information.
+contrast across all color information, producing a fully normalized
+color image used as the input for all segmentation tasks below.
 
-## Part 3 & 4: Segmentation Results
+---
+
+## Part 3 & 4 Results
+
+### Segmentation Methods Applied
+- **Otsu's Global Thresholding** — automatically calculates a single optimal
+  threshold value to separate foreground from background based on the
+  grayscale histogram.
+- **Adaptive Thresholding (Gaussian)** — calculates a local threshold for
+  each region of the image, intended to better handle uneven illumination.
+- **K-Means Clustering** — clusters pixels in HSV color space into K groups
+  (tested K = 3, 4, 5) and isolates the cluster best matching the figure.
+  A Gaussian blur pre-processing step and morphological opening/closing
+  cleanup were applied to reduce grass texture noise in the resulting mask.
+
+### Quantitative Results
 
 | Method | IoU | Dice Coefficient |
 |---|---|---|
@@ -153,7 +197,11 @@ contrast across all color information.
 | Adaptive Thresholding | 0.0787 | 0.1459 |
 | K-Means Clustering | 0.1979 | 0.3305 |
 
-## Part 5: Qualitative Analysis
+---
+
+## Part 5: Evaluation and Analysis
+
+### Qualitative Analysis
 
 **Otsu Thresholding** performed the worst of the three methods (IoU 0.0449). 
 Otsu calculates a single global threshold for the entire image, which struggles 
@@ -191,6 +239,14 @@ visually — the K-Means mask preserved a recognizable full-body silhouette
 of the figure, while Otsu and Adaptive masks were dominated by background 
 texture noise that overwhelmed the relatively small ground truth figure area.
 
+---
+
 ## Comparison Visualization
+Each plot shows: Original | Multi-Channel Normalized | Otsu | Adaptive | K-Means | Ground Truth
 
 ![Segmentation Comparison](readme_plots/segmentation_comparison.png)
+
+---
+
+## AI Usage
+See [AI_Log.md](AI_Log.md) for full AI usage tracking across both assignments.
