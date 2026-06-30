@@ -22,13 +22,13 @@ image using classical and optimization-based segmentation techniques.
 - OpenCV, NumPy, SciPy, Matplotlib
 
 ### Install Dependencies
-\`\`\`bash
+```bash
 pip install -r requirements.txt
-\`\`\`
+```
 
 ### Run the Project — Homework 1
 Run scripts in this order from the `src/` directory:
-\`\`\`bash
+```bash
 python Hello_World.py
 python channel_image_statistics.py
 python color_spectrum_conversions.py
@@ -38,17 +38,17 @@ python blur_pipeline.py
 python subset_partitioner.py
 python boundary_extractor.py
 python visual_report.py
-\`\`\`
+```
 
 ### Run the Project — Homework 2
 Run scripts in this order from the `src/` directory (after Homework 1 scripts):
-\`\`\`bash
+```bash
 python multichannel_normalizer.py
 python threshold_segmentation.py
 python kmeans_segmentation.py
 python segmentation_evaluator.py
 python comparison_visualizer.py
-\`\`\`
+```
 
 ---
 
