@@ -1,7 +1,7 @@
 # NitinsaiKaruturi-CS898BA-Project1
 **Author:** Nitin Sai Karuturi  
 **Course:** CS 898BA – Image Analysis and Computer Vision  
-**Assignment:** Homework 1 & Homework 2
+**Assignment:** Homework 1, Homework 2 & Homework 3
 
 ---
 
@@ -48,6 +48,17 @@ python threshold_segmentation.py
 python kmeans_segmentation.py
 python segmentation_evaluator.py
 python comparison_visualizer.py
+
+\`\`\`
+
+### Run the Project — Homework 3
+Run scripts in this order from the `src/` directory (after HW1/HW2 scripts, and after placing the Fish dataset in `hw3_data/Fish/`):
+\`\`\`bash
+python fish_data_pipeline.py
+python fish_cnn_baseline.py
+python fish_hyperparameter_tuning.py
+python fish_model_evaluator.py
+python fish_results_dashboard.py
 \`\`\`
 
 ---
@@ -77,6 +88,18 @@ python comparison_visualizer.py
 | `kmeans_segmentation.py` | Applies K-Means clustering segmentation in HSV color space |
 | `segmentation_evaluator.py` | Calculates IoU and Dice Coefficient against a manual ground truth mask |
 | `comparison_visualizer.py` | Generates the 6-panel segmentation comparison plot for the README |
+
+---
+
+### Homework 3
+
+| File | Purpose |
+|---|---|
+| `fish_data_pipeline.py` | Loads Fish dataset, creates stratified 70/15/15 train/val/test splits, resizes/normalizes images, applies augmentation |
+| `fish_cnn_baseline.py` | Builds and trains the baseline 3-conv-layer CNN, saves model and training curves |
+| `fish_hyperparameter_tuning.py` | Grid search over learning rate, batch size, and dropout; saves best model based on validation loss |
+| `fish_model_evaluator.py` | Evaluates baseline and tuned models on the test set; generates classification reports and confusion matrix |
+| `fish_results_dashboard.py` | Builds the combined training-curve/confusion-matrix visualization for the README |
 
 ---
 
