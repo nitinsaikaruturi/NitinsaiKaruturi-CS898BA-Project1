@@ -222,7 +222,9 @@ space rather than relying on simple brightness thresholds, K-Means could
 separate the figure's clothing/skin tones from the grass and sky based on 
 hue and saturation differences, not just brightness. Applying Gaussian blur 
 before clustering and morphological cleanup (opening/closing) afterward 
-further reduced grass texture noise that initially fragmented the mask  ### Optimal K Selection
+further reduced grass texture noise that initially fragmented the mask.
+
+### Optimal K Selection
 
 To justify the choice of K=4 for K-Means clustering, IoU and Dice were calculated 
 for the best-matching cluster at each tested K value (3, 4, and 5) against the 
