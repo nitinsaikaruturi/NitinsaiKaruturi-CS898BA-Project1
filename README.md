@@ -316,10 +316,18 @@ Full per-class classification reports are saved in `hw3_output/classification_re
 - **Learning rate:** 0.001 was selected as optimal, consistent with typical Adam optimizer defaults for CNNs of this scale.
 
 ### Visualizations
-- `hw3_plots/augmentation_sample.png` - sample of augmented training images
-- `hw3_plots/baseline_training_curves.png` - baseline model loss/accuracy curves
-- `hw3_plots/results_dashboard.png` - combined baseline vs. tuned model training curves
-- `hw3_plots/confusion_matrix_tuned.png` - confusion matrix for the tuned model on the test set
+
+**Sample Augmented Training Images**
+![Augmentation Sample](hw3_plots/augmentation_sample.png)
+
+**Baseline Model: Training/Validation Curves**
+![Baseline Training Curves](hw3_plots/baseline_training_curves.png)
+
+**Baseline vs. Tuned Model: Combined Training Curves**
+![Results Dashboard](hw3_plots/results_dashboard.png)
+
+**Confusion Matrix — Tuned Model (Test Set)**
+![Confusion Matrix Tuned](hw3_plots/confusion_matrix_tuned.png)
 
 ## AI Usage
 See [AI_Log.md](AI_Log.md) for full AI usage tracking across both assignments.
