@@ -1,7 +1,7 @@
-# AI Usage Log — CS 898BA Homework 1 & Homework 2
+# AI Usage Log — CS 898BA Homework 1, Homework 2 & Homework 3
 **Author:** Nitin Sai Karuturi  
 **Course:** CS 898BA – Image Analysis and Computer Vision  
-**Assignment:** Homework 1 & Homework 2  
+**Assignment:** Homework 1, Homework 2 & Homework 3  
 
 ---
 
@@ -51,15 +51,19 @@
 | 06/29/2026 11:10 PM | Provided comparison_visualizer.py code and ran successfully | Claude | Verified 6-panel comparison plot generated correctly (Original, Normalized, Otsu, Adaptive, K-Means, Ground Truth) | Committed segmentation_comparison.png to readme_plots |
 | 06/29/2026 11:20 PM | Give me full combined README for Homework 1 and Homework 2 in the same format | Claude | Generated a single README.md combining both assignments with matching section structure, updated run instructions, file descriptions, and evidence-based Part 5 analysis using actual computed IoU/Dice scores | Replaced README.md with combined version covering both homeworks |
 | 06/29/2026 11:30 PM | Give me the combined AI Log for both homeworks in a single file | Claude | Generated a single AI_Log.md combining both Homework 1 and Homework 2 entries in the same table format | Replaced AI_Log.md with combined version covering both homeworks |
-Homework 3 Log Entries
-Date and Time	Prompt	Tool	Response Synopsis	Change
-07/21/2026 12:00 AM	Here is my Homework 3 instructions, analyze it and tell me what to do step by step	Claude	Broke the assignment into 6 phases covering branching, data preprocessing/augmentation, baseline CNN, hyperparameter tuning, evaluation, and submission; recommended TensorFlow/Keras given prior OpenCV experience	Planned full Homework 3 project structure
-07/21/2026 12:15 AM	Uploaded Fish.7z dataset, asked to confirm folder structure	Claude	Extracted and inspected the archive, confirmed 1023 images across 6 species folders (Bete, Cray, Discuss, Gold, Guppy, Oscar), flagged Cray's smaller image count as a class imbalance to watch for	Confirmed dataset structure before building the pipeline
-07/21/2026 12:30 AM	Confirmed HW2 pushed, ready to branch for HW3	Claude	Provided git commands to update main and create Feature-Classification branch off main (not off HW2's branch), plus HW3 folder structure (hw3_data, hw3_output, hw3_plots)	Created Feature-Classification branch and HW3 folder structure
-07/21/2026 12:45 AM	Ran fish_data_pipeline.py, got "Clipping input data" warnings	Claude	Provided full data pipeline script (stratified 70/15/15 split, resize/normalize, augmentation); diagnosed a RandomBrightness pixel-clipping bug and fixed it by adding value_range=(0.0, 1.0)	Created and ran fish_data_pipeline.py successfully
-07/21/2026 1:00 AM	git push showed 140.51 MiB pushed	Claude	Diagnosed that the full fish dataset had been accidentally committed to git; fixed via .gitignore and git rm --cached hw3_data	Stopped tracking dataset and model weight files in git
-07/21/2026 1:15 AM	Ran fish_cnn_baseline.py, training completed	Claude	Provided full baseline CNN script (3 conv layers, 20 epochs); identified overfitting pattern from training/validation curves (train acc 96% vs val acc ~85%, rising val loss)	Created and ran fish_cnn_baseline.py, saved baseline model and training curves
-07/21/2026 1:30 AM	Ran fish_hyperparameter_tuning.py, grid search completed	Claude	Provided full hyperparameter grid search script (12 combinations of learning rate, batch size, dropout); selected best config (lr=0.001, batch=64, dropout=0.3) based on validation loss	Created and ran fish_hyperparameter_tuning.py, saved best tuned model
-07/21/2026 1:45 AM	Ran fish_model_evaluator.py, got classification reports	Claude	Provided full evaluation script (classification reports, confusion matrix); identified that the tuned model underperformed baseline on test accuracy (80.4% vs 87.6%) despite better validation loss, diagnosed as class imbalance affecting the Cray class	Created and ran fish_model_evaluator.py, saved classification reports and confusion matrix
-07/21/2026 2:00 AM	Ran fish_results_dashboard.py, asked to update README	Claude	Provided combined dashboard script and full README content covering data pipeline, baseline/tuned model comparison, and qualitative analysis of hyperparameter effects	Created fish_results_dashboard.py, updated README with HW3 documentation and analysis
-07/21/2026 2:15 AM	Asked to verify GitHub branch reflects all HW3 changes	Claude	Could not browse GitHub directly (robots-disallowed), advised manual browser verification of file list and rendered README/images	Verified Feature-Classification branch via manual browser check
+---
+
+## Homework 3 Log Entries
+
+| Date and Time | Prompt | Tool | Response Synopsis | Change |
+|---|---|---|---|---|
+| 07/21/2026 12:00 AM | Here is my Homework 3 instructions, analyze it and tell me what to do step by step | Claude | Broke the assignment into 6 phases covering branching, data preprocessing/augmentation, baseline CNN, hyperparameter tuning, evaluation, and submission; recommended TensorFlow/Keras given prior OpenCV experience | Planned full Homework 3 project structure |
+| 07/21/2026 12:15 AM | Uploaded Fish.7z dataset, asked to confirm folder structure | Claude | Extracted and inspected the archive, confirmed 1023 images across 6 species folders (Bete, Cray, Discuss, Gold, Guppy, Oscar), flagged Cray's smaller image count as a class imbalance to watch for | Confirmed dataset structure before building the pipeline |
+| 07/21/2026 12:30 AM | Confirmed HW2 pushed, ready to branch for HW3 | Claude | Provided git commands to update main and create Feature-Classification branch off main (not off HW2's branch), plus HW3 folder structure (hw3_data, hw3_output, hw3_plots) | Created Feature-Classification branch and HW3 folder structure |
+| 07/21/2026 12:45 AM | Ran fish_data_pipeline.py, got "Clipping input data" warnings | Claude | Provided full data pipeline script (stratified 70/15/15 split, resize/normalize, augmentation); diagnosed a RandomBrightness pixel-clipping bug and fixed it by adding value_range=(0.0, 1.0) | Created and ran fish_data_pipeline.py successfully |
+| 07/21/2026 1:00 AM | git push showed 140.51 MiB pushed | Claude | Diagnosed that the full fish dataset had been accidentally committed to git; fixed via .gitignore and git rm --cached hw3_data | Stopped tracking dataset and model weight files in git |
+| 07/21/2026 1:15 AM | Ran fish_cnn_baseline.py, training completed | Claude | Provided full baseline CNN script (3 conv layers, 20 epochs); identified overfitting pattern from training/validation curves (train acc 96% vs val acc ~85%, rising val loss) | Created and ran fish_cnn_baseline.py, saved baseline model and training curves |
+| 07/21/2026 1:30 AM | Ran fish_hyperparameter_tuning.py, grid search completed | Claude | Provided full hyperparameter grid search script (12 combinations of learning rate, batch size, dropout); selected best config (lr=0.001, batch=64, dropout=0.3) based on validation loss | Created and ran fish_hyperparameter_tuning.py, saved best tuned model |
+| 07/21/2026 1:45 AM | Ran fish_model_evaluator.py, got classification reports | Claude | Provided full evaluation script (classification reports, confusion matrix); identified that the tuned model underperformed baseline on test accuracy (80.4% vs 87.6%) despite better validation loss, diagnosed as class imbalance affecting the Cray class | Created and ran fish_model_evaluator.py, saved classification reports and confusion matrix |
+| 07/21/2026 2:00 AM | Ran fish_results_dashboard.py, asked to update README | Claude | Provided combined dashboard script and full README content covering data pipeline, baseline/tuned model comparison, and qualitative analysis of hyperparameter effects | Created fish_results_dashboard.py, updated README with HW3 documentation and analysis |
+| 07/21/2026 2:15 AM | Asked to verify GitHub branch reflects all HW3 changes | Claude | Could not browse GitHub directly (robots-disallowed), advised manual browser verification of file list and rendered README/images | Verified Feature-Classification branch via manual browser check |
