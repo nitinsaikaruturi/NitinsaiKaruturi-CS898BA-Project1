@@ -222,7 +222,26 @@ space rather than relying on simple brightness thresholds, K-Means could
 separate the figure's clothing/skin tones from the grass and sky based on 
 hue and saturation differences, not just brightness. Applying Gaussian blur 
 before clustering and morphological cleanup (opening/closing) afterward 
-further reduced grass texture noise that initially fragmented the mask.
+further reduced grass texture noise that initially fragmented the mask. ### Optimal K Selection
+
+To justify the choice of K=4 for K-Means clustering, IoU and Dice were calculated 
+for the best-matching cluster at each tested K value (3, 4, and 5) against the 
+ground truth mask:
+
+| K | Best Cluster | IoU | Dice |
+|---|---|---|---|
+| 3 | 2 | 0.1830 | 0.3094 |
+| 4 | 0 | 0.1952 | 0.3266 |
+| 5 | 3 | 0.1833 | 0.3098 |
+
+**K=4 was selected as optimal**, achieving the highest IoU (0.1952) and Dice 
+(0.3266) of the three values tested. K=3 likely under-segments the image, 
+merging the figure with a similarly-colored background region since there 
+are too few clusters to separate them. K=5 likely over-segments, splitting 
+the figure itself into multiple sub-clusters (e.g. separating clothing from 
+skin tone) so that no single cluster fully captures the whole figure. K=4 
+strikes the right balance, producing one cluster that captures the figure 
+as a cohesive region without over-fragmenting it.
 
 **Impact of multi-channel normalization:** Compared to Homework 1's edge 
 detection results (which used only single-channel V normalization), the 
