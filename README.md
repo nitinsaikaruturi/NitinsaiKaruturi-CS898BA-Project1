@@ -248,5 +248,55 @@ Each plot shows: Original | Multi-Channel Normalized | Otsu | Adaptive | K-Means
 
 ---
 
+## Homework 3: Deep Learning for Fish Classification
+
+### Overview
+This assignment builds a CNN to classify 6 species of fish (Bete, Cray, Discuss, Gold, Guppy, Oscar) from a dataset of 1016 labeled images, then performs systematic hyperparameter tuning to attempt to improve performance.
+
+### Data Pipeline
+- Images were split into stratified train/val/test sets (70/15/15) preserving class proportions.
+- All images were resized to 128x128 and normalized to [0, 1].
+- Training data was augmented with random horizontal flips, small rotations, and brightness adjustments to reduce overfitting.
+- **Class imbalance note:** Cray had only 80 total images, notably fewer than other classes (145-207), which affected model performance on that class throughout this assignment.
+
+### Baseline CNN
+A custom 3-convolutional-layer CNN (32, 64, 128 filters) with max-pooling and a dense hidden layer was trained for 20 epochs using Adam (lr=0.001, batch size=32).
+
+- Training accuracy reached 96%, but validation accuracy plateaued around 83-85%.
+- Validation loss decreased initially then increased in later epochs while training loss kept dropping — a clear overfitting pattern (see `hw3_plots/baseline_training_curves.png`).
+
+### Hyperparameter Tuning
+A grid search was performed over:
+- Learning rate: 0.01, 0.001, 0.0001
+- Batch size: 32, 64
+- Dropout rate: 0.3, 0.5
+
+Each of the 12 combinations was trained for 10 epochs, and the best configuration was selected based on validation loss.
+
+**Best configuration:** learning rate = 0.001, batch size = 64, dropout = 0.3 (final val_loss = 0.587, final val_accuracy = 80.9%)
+
+### Evaluation on Test Set
+
+| Model    | Test Accuracy | Macro F1 |
+|----------|---------------|----------|
+| Baseline | 87.6%         | 0.853    |
+| Tuned    | 80.4%         | 0.766    |
+
+Full per-class classification reports are saved in `hw3_output/classification_reports.txt`.
+
+**Key finding:** despite the tuned model achieving a lower validation loss during training (and visibly less overfitting — see `hw3_plots/results_dashboard.png`), it underperformed the baseline on the held-out test set. This highlights an important distinction: optimizing for validation loss does not guarantee better generalization on unseen test data, particularly with a small and imbalanced dataset. The **Cray** class (only 80 total images, the smallest class) suffered the most in the tuned model, with recall dropping from 0.750 (baseline) to 0.417 (tuned) — visible in `hw3_plots/confusion_matrix_tuned.png`, where several Cray images were misclassified as Guppy.
+
+### Qualitative Analysis
+- **Augmentation:** random flips and rotations helped the model generalize across fish orientation, though brightness augmentation required a value-range fix to avoid pixel clipping errors.
+- **Dropout (0.3 vs 0.5):** 0.3 was selected as part of the best configuration, suggesting the network benefited from mild regularization without excessive information loss during training.
+- **Batch size (64 vs 32):** the best configuration used batch size 64, which may have contributed to smoother gradient updates but also gave the smallest class (Cray) fewer updates per epoch, worsening its recall.
+- **Learning rate:** 0.001 was selected as optimal, consistent with typical Adam optimizer defaults for CNNs of this scale.
+
+### Visualizations
+- `hw3_plots/augmentation_sample.png` - sample of augmented training images
+- `hw3_plots/baseline_training_curves.png` - baseline model loss/accuracy curves
+- `hw3_plots/results_dashboard.png` - combined baseline vs. tuned model training curves
+- `hw3_plots/confusion_matrix_tuned.png` - confusion matrix for the tuned model on the test set
+
 ## AI Usage
 See [AI_Log.md](AI_Log.md) for full AI usage tracking across both assignments.
